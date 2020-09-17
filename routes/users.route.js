@@ -5,6 +5,7 @@ const userController = require ('../controllers/user.controller');
  * GET Route to list all users
  */
 router.get('/', userController.findAllUsers);
+
 /**
  * GET Route to find user by id
  */
