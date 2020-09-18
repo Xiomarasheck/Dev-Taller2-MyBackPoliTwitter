@@ -16,15 +16,17 @@ async function createUser (req, res) {
     
     // CREATING THE OBJECT TO PERSIST
     const newUserObject = {
-        username: req.body.username,
+        userName: req.body.userName,
         creation_date: req.body.creation_date
     }
     
     // EXECUTING THE CREATE QUERY - INSERT THE OBJECT INTO DATABASE 
     dbManager.User.create(newUserObject).then (
         data => {
-            res.send (data);
+            res.send(data);
         }
+
+
     ).catch (
         e => {
             // Print error on console
@@ -43,11 +45,11 @@ async function createUser (req, res) {
 async function findAllUsers (req, res){
     try {
         //Execute query
-        const users = await dbManager.User.findAll ();
+        const users = await dbManager.User.findAll();
         
         //Send response
         res.json({
-                data: users
+            data: users
         });
 
     } catch (e) {
@@ -90,10 +92,36 @@ async function findOneUser (req, res){
  * Update user
  */
 async function updateUser (req, res){
-                /**
-                 * TASK:
-                 * IMPLEMENT THE FUNCTION______________________- 
-                 */
+    try {
+
+        // CHECK IF THE REQUEST BODY IS EMPTY
+        if (!req.body) {
+                res.status(400).send({
+                message: "Request body is empty!!!!"
+            });
+            return;
+        }
+
+        const {idUser} = req.params;
+
+        //Execute query
+        const user = await dbManager.User.update(req.body ,{
+            where: {
+                idUser: idUser
+            }
+        });
+
+        //Send response
+        res.json(user);
+
+    } catch (e) {
+        // Print error on console
+        console.log(e);
+        // Send error message as a response 
+        res.status(500).send({
+            message: "Some error occurred"
+        });
+    }
 }
 
 /**
@@ -101,12 +129,28 @@ async function updateUser (req, res){
  * @param {*} req 
  * @param {*} res 
  */
-function deleteUserByUsername (req, res){ 
-                /**
-                 * TASK:
-                 * IMPLEMENT THE FUNCTION______________________- 
-                 */
+async function deleteUserByUsername (req, res){ 
+    try {
+        const { userName } = req.params;
 
+        //Execute query
+        const user = await dbManager.User.destroy({
+            where: {
+                userName: userName
+            }
+        });
+
+        //Send response
+        res.json(user);
+
+    } catch (e) {
+        // Print error on console
+        console.log(e);
+        // Send error message as a response 
+        res.status(500).send({
+            message: "Some error occurred"
+        });
+    }
 }
 
 /**
@@ -114,11 +158,26 @@ function deleteUserByUsername (req, res){
  * @param {*} req 
  * @param {*} res 
  */
-function deleteAllUsers (req, res){
-                /**
-                 * TASK:
-                 * IMPLEMENT THE FUNCTION______________________- 
-                 */
+async function deleteAllUsers (req, res){
+    try {
+        //Execute query
+        const users = await dbManager.User.destroy({
+            where: {}}
+        ).then(function () {});
+        
+        //Send response
+        res.json({
+            data: users
+        });
+
+    } catch (e) {
+        // Print error on console
+        console.log(e);
+        // Send error message as a response 
+        res.status(500).send({
+            message: "Some error occurred"
+        });
+    }
 }
 
 /**
@@ -126,13 +185,25 @@ function deleteAllUsers (req, res){
  * @param {*} req 
  * @param {*} res 
  */
-function findAllUsersByCreatedDate (req, res){
-                /**
-                 * TASK:
-                 * IMPLEMENT THE FUNCTION______________________- 
-                 */
-}
+async function findAllUsersByCreatedDate (req, res){
+    try {
+       //Execute query
+       const users = await dbManager.User.findAll();
+        
+       //Send response
+       res.json({
+           data: users
+       });
 
+    } catch (e) {
+        // Print error on console
+        console.log(e);
+        // Send error message as a response 
+        res.status(500).send({
+            message: "Some error occurred"
+        });
+    }
+}
 
 exports.createUser = createUser; 
 exports.findAllUsers = findAllUsers; 

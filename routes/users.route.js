@@ -28,11 +28,6 @@ router.delete ('/:username',userController.deleteUserByUsername);
 router.delete ('/',userController.deleteAllUsers);
 
 
-/**
- * TASK:
- * ADD THE MISSING ROUTES ______________________________________________________ 
- */
-
 // Export router
 module.exports = router;
 
