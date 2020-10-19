@@ -1,10 +1,11 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
+    "username": "testuser",
+    "password": "rCCeF4N;k",
     "database": "faketwitter",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "host": "34.72.214.127",
+    "dialect": "mysql",
+    "port": "14050"
   },
   "test": {
     "username": "root",
